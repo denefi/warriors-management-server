@@ -11,9 +11,16 @@ router.post("/projects", (req, res, next) => {
 
   Project.create({ title, description, tasks: [] })
     .then((response) => res.status(201).json(response))
-    .catch((err) =>
-      res.status(500).json({ message: "Error createing Project", error: err })
-    );
+    .catch((err) => {
+      console.log(err);
+      if (err.code === 11000) {
+        res
+          .status(500)
+          .json({ message: "Project allready exists", error: err });
+      } else {
+        res.status(500).json({ message: "Error creating Project", error: err });
+      }
+    });
 });
 
 router.get("/projects", (req, res, next) => {
