@@ -21,6 +21,9 @@ app.use("/api", indexRoutes);
 const projectRoutes = require("./routes/project.routes");
 app.use("/api", projectRoutes);
 
+const taskRouter = require("./routes/task.routes"); // <== IMPORT
+app.use("/api", taskRouter); // <== ADD
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
