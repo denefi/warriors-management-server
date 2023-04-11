@@ -3,7 +3,13 @@ module.exports = (app) => {
     // this middleware runs whenever requested page is not available
     res.status(404).json({ message: "This route does not exist" });
   });
-
+  app.use(function (err, req, res, next) {
+    if (err.name === "UnauthorizedError") {
+      res.status(401).json({ message: "You are not logged in", error: err });
+    } else {
+      next(err);
+    }
+  });
   app.use((err, req, res, next) => {
     // whenever you call next(err), this middleware will handle the error
     // always logs the error
